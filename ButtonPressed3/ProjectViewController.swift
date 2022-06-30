@@ -17,13 +17,12 @@ class ProjectViewController: UIViewController {
     var projectCounter = 0
     var isStop = false
     var projectTimer = Timer()
+    var breakTimer = Timer()
     
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-      resetBreak()
+        resetBreak()
         startProject()
         
     }
@@ -31,7 +30,6 @@ class ProjectViewController: UIViewController {
     @IBAction func buttonPressed(_ sender: UIButton) {
         isStop = !isStop
         if isStop {
-          
             continueBreak()
             stopProject()
             
@@ -43,71 +41,65 @@ class ProjectViewController: UIViewController {
         store()
     }
     
-    func stopProjectTimer() {
-        projectTimer.invalidate()
-    }
-    
-    
+//MARK: Time
     func runProjectTimer() {
         projectTimer.invalidate()
         projectTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateProjectTimer), userInfo: nil, repeats: true)
     }
-    
+
+
     @objc func updateProjectTimer() {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
-        let dateString = dateFormatter.string(from: date)
-        ProjectLabel.text = dateString
-        
+        projectCounter += 1
+        ProjectLabel.text = String(projectCounter)
     }
-    
-    
-    
+   
     func runBreakTimer() {
-        projectTimer.invalidate()
-        projectTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateProjectTimer), userInfo: nil, repeats: true)
+        breakTimer.invalidate()
+        breakTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateBreakTimer), userInfo: nil, repeats: true)
+    }
+    @objc func updateBreakTimer() {
+        breakCounter += 1
+        breakLabel.text = String(breakCounter)
     }
     
-    @objc func updateProjectTimer() {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
-        let dateString = dateFormatter.string(from: date)
-        ProjectLabel.text = dateString
-        
+    
+//MARK: main functions
+    
+    func stopProjectTimer() {
+        projectTimer.invalidate()
     }
     
     func resetBreak(){
-        breakLabel.text = "0:00:00"
+        breakCounter = 0
+        breakLabel.text = String(breakCounter)
+        breakTimer.invalidate()
     }
     
     func startProject(){
-       // ProjectLabel.text = "0:00:01"
-        projectCounter += 1
         runProjectTimer()
-        
     }
     
     func continueBreak() {
-        breakLabel.text = "0:01:01"
-        breakCounter += 1
+        runBreakTimer()
     }
     func stopProject() {
-        ProjectLabel.text = "0:01:00"
         stopProjectTimer()
     }
     func stopBreak() {
-        breakLabel.text = "0:01:00"
+        breakTimer.invalidate()
     }
     func continueProject() {
-        ProjectLabel.text = "0:01:01"
-        projectCounter += 1
+        runProjectTimer()
+       
     }
+    
+    //MARK: store
     
     func store() {
         print("Store: time, isStop, activity")
         print("projectCounter: \(projectCounter)")
         print("breakCounter: \(breakCounter)")
     }
+    
+    
 }

@@ -88,6 +88,40 @@ class ProjectViewController: UIViewController {
         breakLabel.text = String(breakCounter)
     }
     
+    func convertToTime(number: Int) -> String {
+      
+        var resultString = ""
+        
+        let hour = number / 3600
+        let minute = ( number % 3600 ) / 60
+        let second = ( number % 3600) % 60
+
+        resultString = String(hour)
+        resultString += addZero(number: minute)
+        resultString += addZero(number: second)
+        
+        return resultString
+
+    }
+    
+    func addZero(number num: Int) -> String {
+        
+        var resultString = ""
+        if num < 10 {
+            resultString = "0\(num)"
+        }else {
+            resultString = String(num)
+        }
+      return resultString
+    }
+    
+    
+    func secondsToHoursMinutesSeconds(_ seconds: Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    
+    
     
 //MARK: main functions
     
@@ -118,6 +152,8 @@ class ProjectViewController: UIViewController {
         runProjectTimer()
        
     }
+    
+
     
     //MARK: store
     

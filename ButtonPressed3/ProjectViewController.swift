@@ -7,6 +7,19 @@
 
 import UIKit
 
+enum Activity {
+    case Project, Break
+}
+
+struct Event {
+    let time: Date
+    let isStop: Bool
+    let stoppedActivity: Activity
+    
+}
+
+
+
 class ProjectViewController: UIViewController {
 
     @IBOutlet weak var ProjectLabel: UILabel!
@@ -18,28 +31,40 @@ class ProjectViewController: UIViewController {
     var isStop = false
     var projectTimer = Timer()
     var breakTimer = Timer()
+    var storeArray: [Event] = []
+    var storeCounter = 0
     
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         resetBreak()
         startProject()
+        store(.Project, isStop)
         
     }
     
 //MARK: ButtonPushed
     @IBAction func buttonPressed(_ sender: UIButton) {
+        
+        var stoppedActivity: Activity
+        
         isStop = !isStop
         if isStop {
+            stoppedActivity = .Project
             continueBreak()
             stopProject()
             
+            
         }else {
+            
+            stoppedActivity = .Break
             stopBreak()
             continueProject()
+           
         }
-      
-        store()
+    store(stoppedActivity, isStop)
+    
     }
     
 //MARK: Time
@@ -96,18 +121,19 @@ class ProjectViewController: UIViewController {
     
     //MARK: store
     
-    func store() {
+    func store(_ activity: Activity, _ isStop: Bool ) {
         
         let date = Date()
-        let df = DateFormatter()
-        df.dateFormat = "HH:mm:ss"
-        let nowString = df.string(from: date)
-        print("date: \(date)")
-        print("nowString: \(nowString)")
         
-        print("Store: time, isStop, activity")
-        print("projectCounter: \(projectCounter)")
-        print("breakCounter: \(breakCounter)")
+        storeCounter += 1
+        
+        storeArray.append(Event(time: date, isStop: isStop, stoppedActivity: activity))
+        print(storeCounter)
+        for event in storeArray {
+            print(event.time, event.stoppedActivity, event.isStop )
+            
+        }
+        
     }
     
     

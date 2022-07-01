@@ -27,6 +27,7 @@ class ProjectViewController: UIViewController {
         
     }
     
+//MARK: ButtonPushed
     @IBAction func buttonPressed(_ sender: UIButton) {
         isStop = !isStop
         if isStop {
@@ -96,6 +97,14 @@ class ProjectViewController: UIViewController {
     //MARK: store
     
     func store() {
+        
+        let date = Date()
+        let df = DateFormatter()
+        df.dateFormat = "HH:mm:ss"
+        let nowString = df.string(from: date)
+        print("date: \(date)")
+        print("nowString: \(nowString)")
+        
         print("Store: time, isStop, activity")
         print("projectCounter: \(projectCounter)")
         print("breakCounter: \(breakCounter)")

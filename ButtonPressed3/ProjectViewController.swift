@@ -15,56 +15,43 @@ struct Event {
     let time: Date
     let isStop: Bool
     let stoppedActivity: Activity
-    
 }
-
-
 
 class ProjectViewController: UIViewController {
 
     @IBOutlet weak var ProjectLabel: UILabel!
-  
     @IBOutlet weak var breakLabel: UILabel!
  
     var breakCounter = 0
     var projectCounter = 0
-    var isStop = false
+    var projectIsStop = false
     var projectTimer = Timer()
     var breakTimer = Timer()
     var storeArray: [Event] = []
     var storeCounter = 0
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        resetBreak()
-        startProject()
-        store(.Project, isStop)
-        
+        resetBreakCounter()
+        startProjectCounter()
+        store(.Project, projectIsStop)
     }
     
 //MARK: ButtonPushed
     @IBAction func buttonPressed(_ sender: UIButton) {
-        
         var stoppedActivity: Activity
-        
-        isStop = !isStop
-        if isStop {
+        projectIsStop = !projectIsStop
+        if projectIsStop {
             stoppedActivity = .Project
-            continueBreak()
-            stopProject()
-            
-            
-        }else {
-            
-            stoppedActivity = .Break
-            stopBreak()
-            continueProject()
-           
+            continueBreakCounter()
+            stopProjectCounter()
         }
-    store(stoppedActivity, isStop)
-    
+        else {
+            stoppedActivity = .Break
+            stopBreakCounter()
+            continueProjectCounter()
+        }
+    store(stoppedActivity, projectIsStop)
     }
     
 //MARK: Time
@@ -72,40 +59,34 @@ class ProjectViewController: UIViewController {
         projectTimer.invalidate()
         projectTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateProjectTimer), userInfo: nil, repeats: true)
     }
-
-
+    
     @objc func updateProjectTimer() {
         projectCounter += 1
-        ProjectLabel.text = convertToTime(number: projectCounter)
+        ProjectLabel.text = convertToTimeFrom(number: projectCounter)
     }
-   
+    
     func runBreakTimer() {
         breakTimer.invalidate()
         breakTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateBreakTimer), userInfo: nil, repeats: true)
     }
+    
     @objc func updateBreakTimer() {
         breakCounter += 1
-        breakLabel.text = convertToTime(number: breakCounter)
+        breakLabel.text = convertToTimeFrom(number: breakCounter)
     }
     
-    func convertToTime(number: Int) -> String {
-      
+    func convertToTimeFrom(number: Int) -> String {
         var resultString = ""
-        
         let hour = number / 3600
         let minute = ( number % 3600 ) / 60
         let second = ( number % 3600) % 60
-
         resultString = "\(hour):"
         resultString += addZero(number: minute) + ":"
         resultString += addZero(number: second)
-        
         return resultString
-
     }
     
     func addZero(number num: Int) -> String {
-        
         var resultString = ""
         if num < 10 {
             resultString = "0\(num)"
@@ -115,57 +96,43 @@ class ProjectViewController: UIViewController {
       return resultString
     }
     
+//MARK: Counters
+
+    func resetBreakCounter(){
+        breakCounter = 0
+        breakLabel.text = convertToTimeFrom(number: breakCounter)
+        breakTimer.invalidate()
+    }
     
+    func startProjectCounter(){
+        runProjectTimer()
+    }
     
+    func continueBreakCounter() {
+        runBreakTimer()
+    }
     
-//MARK: main functions
-    
-    func stopProjectTimer() {
+    func stopProjectCounter() {
         projectTimer.invalidate()
     }
     
-    func resetBreak(){
-        breakCounter = 0
-        breakLabel.text = convertToTime(number: breakCounter)
+    func stopBreakCounter() {
         breakTimer.invalidate()
     }
     
-    func startProject(){
+    func continueProjectCounter() {
         runProjectTimer()
     }
-    
-    func continueBreak() {
-        runBreakTimer()
-    }
-    func stopProject() {
-        stopProjectTimer()
-    }
-    func stopBreak() {
-        breakTimer.invalidate()
-    }
-    func continueProject() {
-        runProjectTimer()
-       
-    }
-    
-
     
     //MARK: store
-    
     func store(_ activity: Activity, _ isStop: Bool ) {
-        
         let date = Date()
-        
         storeCounter += 1
-        
         storeArray.append(Event(time: date, isStop: isStop, stoppedActivity: activity))
         print(storeCounter)
         for event in storeArray {
             print(event.time, event.stoppedActivity, event.isStop )
-            
         }
-        
     }
-    
     
 }

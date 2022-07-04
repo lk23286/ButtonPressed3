@@ -23,10 +23,14 @@ class ProjectViewController: UIViewController {
     @IBOutlet weak var breakLabel: UILabel!
  
     var breakCounter = 0
-    var projectCounter = 0
-    var projectIsStop = false
-    var projectTimer = Timer()
     var breakTimer = Timer()
+    var breakStartTime: Date?
+    
+    var projectCounter = 0
+    var projectTimer = Timer()
+    var projectStartTimer = Date.now
+    var projectIsStop = false
+
     var storeArray: [Event] = []
     var storeCounter = 0
     
@@ -37,7 +41,7 @@ class ProjectViewController: UIViewController {
         store(.Project, projectIsStop)
     }
     
-//MARK: ButtonPushed
+//MARK: ButtonPressed
     @IBAction func buttonPressed(_ sender: UIButton) {
         var stoppedActivity: Activity
         projectIsStop = !projectIsStop
@@ -53,6 +57,54 @@ class ProjectViewController: UIViewController {
         }
     store(stoppedActivity, projectIsStop)
     }
+ 
+//MARK: Counters
+
+    func startProjectCounter(){
+        runProjectTimer()
+    }
+
+    func resetBreakCounter(){
+        breakCounter = 0
+        breakLabel.text = convertToTimeFrom(number: breakCounter)
+        breakTimer.invalidate()
+    }
+    
+    func continueBreakCounter() {
+        
+        if breakStartTime == nil {
+            breakStartTime = Date.now
+        }
+        runBreakTimer()
+        
+    }
+    
+    func stopProjectCounter() {
+        projectTimer.invalidate()
+        projectCounter += elapsedMinCalculatorFrom(startTime: projectStartTimer)
+        projectStartTimer = Date.now
+    }
+    
+    func stopBreakCounter() {
+        breakTimer.invalidate()
+        breakCounter += elapsedMinCalculatorFrom(startTime: breakStartTime!)
+        breakStartTime = Date.now
+    }
+    
+    func continueProjectCounter() {
+        runProjectTimer()
+    }
+    
+    func elapsedMinCalculatorFrom(startTime: Date) -> Int {
+        
+        print(startTime)
+        
+        var date = Date()
+        date = startTime
+        let elapsedMin = Int(date.timeIntervalSinceNow) * -1
+    
+        return elapsedMin
+    }
     
 //MARK: Time
     func runProjectTimer() {
@@ -61,7 +113,8 @@ class ProjectViewController: UIViewController {
     }
     
     @objc func updateProjectTimer() {
-        projectCounter += 1
+        
+        projectCounter = elapsedMinCalculatorFrom(startTime: projectStartTimer)
         ProjectLabel.text = convertToTimeFrom(number: projectCounter)
     }
     
@@ -71,7 +124,7 @@ class ProjectViewController: UIViewController {
     }
     
     @objc func updateBreakTimer() {
-        breakCounter += 1
+        breakCounter = elapsedMinCalculatorFrom(startTime: breakStartTime!)
         breakLabel.text = convertToTimeFrom(number: breakCounter)
     }
     
@@ -96,40 +149,11 @@ class ProjectViewController: UIViewController {
       return resultString
     }
     
-//MARK: Counters
-
-    func resetBreakCounter(){
-        breakCounter = 0
-        breakLabel.text = convertToTimeFrom(number: breakCounter)
-        breakTimer.invalidate()
-    }
-    
-    func startProjectCounter(){
-        runProjectTimer()
-    }
-    
-    func continueBreakCounter() {
-        runBreakTimer()
-    }
-    
-    func stopProjectCounter() {
-        projectTimer.invalidate()
-    }
-    
-    func stopBreakCounter() {
-        breakTimer.invalidate()
-    }
-    
-    func continueProjectCounter() {
-        runProjectTimer()
-    }
-    
     //MARK: store
     func store(_ activity: Activity, _ isStop: Bool ) {
         let date = Date()
         storeCounter += 1
         storeArray.append(Event(time: date, isStop: isStop, stoppedActivity: activity))
-        print(storeCounter)
         for event in storeArray {
             print(event.time, event.stoppedActivity, event.isStop )
         }

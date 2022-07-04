@@ -28,7 +28,7 @@ class ProjectViewController: UIViewController {
     
     var projectCounter = 0
     var projectTimer = Timer()
-    var projectStartTimer = Date.now
+    var projectStartTime = Date.now
     var projectIsStop = false
 
     var storeArray: [Event] = []
@@ -47,8 +47,8 @@ class ProjectViewController: UIViewController {
         projectIsStop = !projectIsStop
         if projectIsStop {
             stoppedActivity = .Project
-            continueBreakCounter()
             stopProjectCounter()
+            continueBreakCounter()
         }
         else {
             stoppedActivity = .Break
@@ -61,48 +61,75 @@ class ProjectViewController: UIViewController {
 //MARK: Counters
 
     func startProjectCounter(){
+        
+print("BEGIN startProjectCounter")
+print("projectStartTimer1: \(projectStartTime)")
+print("END startProjectCounter")
+        
         runProjectTimer()
+        
     }
 
     func resetBreakCounter(){
-        breakCounter = 0
+        // breakCounter = 0
         breakLabel.text = convertToTimeFrom(number: breakCounter)
-        breakTimer.invalidate()
+        //breakTimer.invalidate()
     }
     
     func continueBreakCounter() {
         
         if breakStartTime == nil {
             breakStartTime = Date.now
+print("breakStartTime nil: \(breakStartTime!)")
         }
+print("breakStartTime NOT nil: \(breakStartTime!)")
         runBreakTimer()
         
     }
     
     func stopProjectCounter() {
+        
         projectTimer.invalidate()
-        projectCounter += elapsedMinCalculatorFrom(startTime: projectStartTimer)
-        projectStartTimer = Date.now
+        projectCounter += elapsedMinCalculatorFrom(projectStartTime)
+        breakStartTime = Date.now
+        
+print("BEGIN stopProjectCounter")
+        
+print("projectCounter: \(projectCounter)")
+print("projectStartTimer: \(projectStartTime)")
+print("elapsedMinCalculatorFrom: \(elapsedMinCalculatorFrom(projectStartTime))")
+
+print("END stopProjectCounter")
     }
     
     func stopBreakCounter() {
         breakTimer.invalidate()
-        breakCounter += elapsedMinCalculatorFrom(startTime: breakStartTime!)
-        breakStartTime = Date.now
+        breakCounter += elapsedMinCalculatorFrom(breakStartTime!)
+        projectStartTime = Date.now
+        
+        print("BEGIN stopBreakCounter")
+                
+        print("breakCounter: \(breakCounter)")
+        print("breakStartTime: \(breakStartTime!)")
+        print("elapsedMinCalculatorFrom: \(elapsedMinCalculatorFrom(breakStartTime!))")
+
+        print("END stopBreakCounter")
+        
     }
     
     func continueProjectCounter() {
         runProjectTimer()
     }
     
-    func elapsedMinCalculatorFrom(startTime: Date) -> Int {
+    func elapsedMinCalculatorFrom(_ startTime: Date) -> Int {
         
-        print(startTime)
+print("BEGIN elapsedMinCalculatorFrom")
         
-        var date = Date()
-        date = startTime
-        let elapsedMin = Int(date.timeIntervalSinceNow) * -1
-    
+print("date: \(startTime)")
+        let elapsedMin = Int(startTime.timeIntervalSinceNow) * -1
+print("elapsedMin: \(elapsedMin)")
+        
+print("END elapsedMinCalculatorFrom")
         return elapsedMin
     }
     
@@ -114,8 +141,7 @@ class ProjectViewController: UIViewController {
     
     @objc func updateProjectTimer() {
         
-        projectCounter = elapsedMinCalculatorFrom(startTime: projectStartTimer)
-        ProjectLabel.text = convertToTimeFrom(number: projectCounter)
+        ProjectLabel.text = convertToTimeFrom(number: (projectCounter + elapsedMinCalculatorFrom(projectStartTime)) )
     }
     
     func runBreakTimer() {
@@ -124,8 +150,8 @@ class ProjectViewController: UIViewController {
     }
     
     @objc func updateBreakTimer() {
-        breakCounter = elapsedMinCalculatorFrom(startTime: breakStartTime!)
-        breakLabel.text = convertToTimeFrom(number: breakCounter)
+        
+        breakLabel.text = convertToTimeFrom(number: (breakCounter + elapsedMinCalculatorFrom(breakStartTime!)) )
     }
     
     func convertToTimeFrom(number: Int) -> String {
@@ -154,9 +180,9 @@ class ProjectViewController: UIViewController {
         let date = Date()
         storeCounter += 1
         storeArray.append(Event(time: date, isStop: isStop, stoppedActivity: activity))
-        for event in storeArray {
-            print(event.time, event.stoppedActivity, event.isStop )
-        }
+//        for event in storeArray {
+//print(event.time, event.stoppedActivity, event.isStop )
+//        }
     }
     
 }

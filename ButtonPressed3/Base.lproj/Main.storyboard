@@ -16,8 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud" translatesAutoresizingMaskIntoConstraints="NO" id="7oJ-lg-C45">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9F-uH-1gP">
                                 <rect key="frame" x="148.5" y="422.5" width="117.5" height="51"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Project">
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle0"/>
@@ -28,10 +32,14 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <constraints>
-                            <constraint firstItem="U9F-uH-1gP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="PoA-C0-7ye"/>
-                            <constraint firstItem="U9F-uH-1gP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dbw-4R-XmZ"/>
+                            <constraint firstItem="7oJ-lg-C45" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="DtO-mR-Upy"/>
+                            <constraint firstItem="U9F-uH-1gP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Jcn-0m-1yz"/>
+                            <constraint firstAttribute="bottom" secondItem="7oJ-lg-C45" secondAttribute="bottom" id="R4Z-Hf-hKG"/>
+                            <constraint firstItem="U9F-uH-1gP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="V3W-MZ-bxK"/>
+                            <constraint firstAttribute="trailing" secondItem="7oJ-lg-C45" secondAttribute="trailing" id="lxp-8B-fop"/>
+                            <constraint firstItem="7oJ-lg-C45" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pOu-6X-wXA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7lz-dZ-IaH"/>
@@ -136,14 +144,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cloud" width="1200" height="677"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

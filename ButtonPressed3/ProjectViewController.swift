@@ -61,13 +61,7 @@ class ProjectViewController: UIViewController {
 //MARK: Counters
 
     func startProjectCounter(){
-        
-print("BEGIN startProjectCounter")
-print("projectStartTimer1: \(projectStartTime)")
-print("END startProjectCounter")
-        
         runProjectTimer()
-        
     }
 
     func resetBreakCounter(){
@@ -80,11 +74,8 @@ print("END startProjectCounter")
         
         if breakStartTime == nil {
             breakStartTime = Date.now
-print("breakStartTime nil: \(breakStartTime!)")
         }
-print("breakStartTime NOT nil: \(breakStartTime!)")
         runBreakTimer()
-        
     }
     
     func stopProjectCounter() {
@@ -92,29 +83,12 @@ print("breakStartTime NOT nil: \(breakStartTime!)")
         projectTimer.invalidate()
         projectCounter += elapsedMinCalculatorFrom(projectStartTime)
         breakStartTime = Date.now
-        
-print("BEGIN stopProjectCounter")
-        
-print("projectCounter: \(projectCounter)")
-print("projectStartTimer: \(projectStartTime)")
-print("elapsedMinCalculatorFrom: \(elapsedMinCalculatorFrom(projectStartTime))")
-
-print("END stopProjectCounter")
     }
     
     func stopBreakCounter() {
         breakTimer.invalidate()
         breakCounter += elapsedMinCalculatorFrom(breakStartTime!)
         projectStartTime = Date.now
-        
-        print("BEGIN stopBreakCounter")
-                
-        print("breakCounter: \(breakCounter)")
-        print("breakStartTime: \(breakStartTime!)")
-        print("elapsedMinCalculatorFrom: \(elapsedMinCalculatorFrom(breakStartTime!))")
-
-        print("END stopBreakCounter")
-        
     }
     
     func continueProjectCounter() {
@@ -122,14 +96,7 @@ print("END stopProjectCounter")
     }
     
     func elapsedMinCalculatorFrom(_ startTime: Date) -> Int {
-        
-print("BEGIN elapsedMinCalculatorFrom")
-        
-print("date: \(startTime)")
         let elapsedMin = Int(startTime.timeIntervalSinceNow) * -1
-print("elapsedMin: \(elapsedMin)")
-        
-print("END elapsedMinCalculatorFrom")
         return elapsedMin
     }
     
@@ -140,7 +107,6 @@ print("END elapsedMinCalculatorFrom")
     }
     
     @objc func updateProjectTimer() {
-        
         ProjectLabel.text = convertToTimeFrom(number: (projectCounter + elapsedMinCalculatorFrom(projectStartTime)) )
     }
     
@@ -150,7 +116,6 @@ print("END elapsedMinCalculatorFrom")
     }
     
     @objc func updateBreakTimer() {
-        
         breakLabel.text = convertToTimeFrom(number: (breakCounter + elapsedMinCalculatorFrom(breakStartTime!)) )
     }
     

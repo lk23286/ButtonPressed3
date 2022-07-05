@@ -18,7 +18,9 @@ struct Event {
 }
 
 class ProjectViewController: UIViewController {
-
+    
+//MARK: Intiate stage
+    
     @IBOutlet weak var ProjectLabel: UILabel!
     @IBOutlet weak var breakLabel: UILabel!
  
@@ -33,7 +35,7 @@ class ProjectViewController: UIViewController {
 
     var storeArray: [Event] = []
     var storeCounter = 0
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         resetBreakCounter()
@@ -66,10 +68,10 @@ class ProjectViewController: UIViewController {
 
     func resetBreakCounter(){
         breakLabel.text = convertToTimeFrom(number: 0)
+        breakLabel.alpha = 0.5
     }
     
     func continueBreakCounter() {
-        
         if breakStartTime == nil {
             breakStartTime = Date.now
         }
@@ -105,7 +107,10 @@ class ProjectViewController: UIViewController {
     }
     
     @objc func updateProjectTimer() {
+        ProjectLabel.alpha = 1
         ProjectLabel.text = convertToTimeFrom(number: (projectCounter + elapsedMinCalculatorFrom(projectStartTime)) )
+        breakLabel.alpha = 0.5
+        
     }
     
     func runBreakTimer() {
@@ -114,7 +119,9 @@ class ProjectViewController: UIViewController {
     }
     
     @objc func updateBreakTimer() {
+        breakLabel.alpha = 1
         breakLabel.text = convertToTimeFrom(number: (breakCounter + elapsedMinCalculatorFrom(breakStartTime!)) )
+        ProjectLabel.alpha = 0.5
     }
     
     func convertToTimeFrom(number: Int) -> String {
@@ -143,9 +150,9 @@ class ProjectViewController: UIViewController {
         let date = Date()
         storeCounter += 1
         storeArray.append(Event(time: date, isStop: isStop, stoppedActivity: activity))
-//        for event in storeArray {
-//print(event.time, event.stoppedActivity, event.isStop )
-//        }
+        for event in storeArray {
+print(event.time, event.stoppedActivity, event.isStop )
+        }
     }
     
 }

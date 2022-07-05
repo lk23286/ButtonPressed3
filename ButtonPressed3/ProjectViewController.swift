@@ -65,9 +65,7 @@ class ProjectViewController: UIViewController {
     }
 
     func resetBreakCounter(){
-        // breakCounter = 0
-        breakLabel.text = convertToTimeFrom(number: breakCounter)
-        //breakTimer.invalidate()
+        breakLabel.text = convertToTimeFrom(number: 0)
     }
     
     func continueBreakCounter() {

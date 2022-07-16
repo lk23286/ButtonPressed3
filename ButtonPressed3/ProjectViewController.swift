@@ -19,7 +19,7 @@ struct Event {
 
 class ProjectViewController: UIViewController {
     
-//MARK: Intiate stage
+//MARK: Initiate stage
     
     @IBOutlet weak var ProjectLabel: UILabel!
     @IBOutlet weak var breakLabel: UILabel!
@@ -35,6 +35,9 @@ class ProjectViewController: UIViewController {
 
     var storeArray: [Event] = []
     var storeCounter = 0
+    
+    var defaults = UserDefaults.standard
+    let projectKey = "projectKey"
  
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +111,11 @@ class ProjectViewController: UIViewController {
     
     @objc func updateProjectTimer() {
         ProjectLabel.alpha = 1
-        ProjectLabel.text = convertToTimeFrom(number: (projectCounter + elapsedMinCalculatorFrom(projectStartTime)) )
+        
+        let projectSumTime = projectCounter + elapsedMinCalculatorFrom(projectStartTime)
+        defaults.set(projectSumTime, forKey: projectKey)
+        
+        ProjectLabel.text = convertToTimeFrom(number: projectSumTime)
         breakLabel.alpha = 0.5
         
     }

@@ -112,9 +112,9 @@ print(projectIsStop)
     }
     
     func continueBreakCounter() {
-        if breakStartTime == nil {
-            breakStartTime = Date.now
-        }
+//        if breakStartTime == nil {
+//            breakStartTime = Date.now
+//        }
         runBreakTimer()
     }
     

@@ -26,7 +26,7 @@ class ProjectViewController: UIViewController {
  
     var breakCounter = 0
     var breakTimer = Timer()
-    var breakStartTime: Date?
+    var breakStartTime = Date.now
     
     var projectCounter = 0
     var projectTimer = Timer()
@@ -38,37 +38,66 @@ class ProjectViewController: UIViewController {
     
     var defaults = UserDefaults.standard
     let projectKey = "projectKey"
+    let breakKey = "breakKey"
+    let projectIsKey = "projectIsKey"
  
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let projectTimeStored = defaults.integer(forKey: projectKey)
+        projectCounter = projectTimeStored
         
         let recoveredProjectTimeString = convertToTimeFrom(number: projectTimeStored)
+        ProjectLabel.text = recoveredProjectTimeString
         
-        print(projectTimeStored, recoveredProjectTimeString)
+        print("Project: \(projectTimeStored), \(recoveredProjectTimeString) " )
+        
+        let projectIsStopStored = defaults.bool(forKey: projectIsKey)
+        projectIsStop = projectIsStopStored
         
         
-        resetBreakCounter()
-        startProjectCounter()
+        print("ProjectIsStopped? : \(projectIsStopStored)")
+        
+        let breakTimerStored = defaults.integer(forKey: breakKey)
+        breakCounter = breakTimerStored
+        
+        let recoveredBreakTimerString = convertToTimeFrom(number: breakTimerStored)
+        breakLabel.text = recoveredBreakTimerString
+        
+        print("Break: \(breakTimerStored), \(recoveredBreakTimerString)")
+        
+        if projectIsStop {
+            stopProjectCounter()
+            continueBreakCounter()
+        } else {
+            stopBreakCounter()
+            continueProjectCounter()
+        }
+        
+
         store(.Project, projectIsStop)
     }
     
 //MARK: ButtonPressed
     @IBAction func buttonPressed(_ sender: UIButton) {
-        var stoppedActivity: Activity
+      //  var stoppedActivity: Activity
+        
         projectIsStop = !projectIsStop
+        defaults.set(projectIsStop, forKey: projectIsKey)
+print(projectIsStop)
+       
         if projectIsStop {
-            stoppedActivity = .Project
+         //   stoppedActivity = .Project
             stopProjectCounter()
             continueBreakCounter()
         }
         else {
-            stoppedActivity = .Break
+          //  stoppedActivity = .Break
             stopBreakCounter()
             continueProjectCounter()
         }
-    store(stoppedActivity, projectIsStop)
+   // store(stoppedActivity, projectIsStop)
+     
     }
  
 //MARK: Counters
@@ -98,7 +127,7 @@ class ProjectViewController: UIViewController {
     
     func stopBreakCounter() {
         breakTimer.invalidate()
-        breakCounter += elapsedMinCalculatorFrom(breakStartTime!)
+        breakCounter += elapsedMinCalculatorFrom(breakStartTime)
         projectStartTime = Date.now
     }
     
@@ -118,17 +147,12 @@ class ProjectViewController: UIViewController {
     }
     
     @objc func updateProjectTimer() {
+        
         ProjectLabel.alpha = 1
-        
         let projectSumTime = projectCounter + elapsedMinCalculatorFrom(projectStartTime)
-        
         defaults.set(projectSumTime, forKey: projectKey)
-        
         ProjectLabel.text = convertToTimeFrom(number: projectSumTime)
         breakLabel.alpha = 0.5
-        
-        
-        
     }
     
     func runBreakTimer() {
@@ -138,8 +162,15 @@ class ProjectViewController: UIViewController {
     
     @objc func updateBreakTimer() {
         breakLabel.alpha = 1
-        breakLabel.text = convertToTimeFrom(number: (breakCounter + elapsedMinCalculatorFrom(breakStartTime!)) )
+        
+        let breakSumTime = breakCounter + elapsedMinCalculatorFrom(breakStartTime)
+        
+        breakLabel.text = convertToTimeFrom(number: breakSumTime )
+        
+        defaults.set(breakSumTime, forKey: breakKey)
+        
         ProjectLabel.alpha = 0.5
+      
     }
     
     func convertToTimeFrom(number: Int) -> String {

@@ -41,6 +41,14 @@ class ProjectViewController: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let projectTimeStored = defaults.integer(forKey: projectKey)
+        
+        let recoveredProjectTimeString = convertToTimeFrom(number: projectTimeStored)
+        
+        print(projectTimeStored, recoveredProjectTimeString)
+        
+        
         resetBreakCounter()
         startProjectCounter()
         store(.Project, projectIsStop)
@@ -113,10 +121,13 @@ class ProjectViewController: UIViewController {
         ProjectLabel.alpha = 1
         
         let projectSumTime = projectCounter + elapsedMinCalculatorFrom(projectStartTime)
+        
         defaults.set(projectSumTime, forKey: projectKey)
         
         ProjectLabel.text = convertToTimeFrom(number: projectSumTime)
         breakLabel.alpha = 0.5
+        
+        
         
     }
     
@@ -158,7 +169,7 @@ class ProjectViewController: UIViewController {
         storeCounter += 1
         storeArray.append(Event(time: date, isStop: isStop, stoppedActivity: activity))
         for event in storeArray {
-print(event.time, event.stoppedActivity, event.isStop )
+//print(event.time, event.stoppedActivity, event.isStop )
         }
     }
     

@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  ButtonPressed3
+//  storeDataInPlistStudyBetweenSegueWays
 //
-//  Created by Laszlo Kovacs on 2022. 06. 29..
+//  Created by Laszlo Kovacs on 2022. 07. 29..
 //
 
 import UIKit
@@ -14,12 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
-        
-        
-        
-        
         return true
     }
 

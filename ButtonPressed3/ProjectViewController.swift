@@ -43,19 +43,25 @@ class ProjectViewController: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ViewDidLoad")
+        
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("viewWillAppear")
         
         let projectTimeStored = defaults.integer(forKey: projectKey)
-        projectCounter = projectTimeStored
         
+        projectCounter = projectTimeStored
         let recoveredProjectTimeString = convertToTimeFrom(number: projectTimeStored)
         ProjectLabel.text = recoveredProjectTimeString
-        
         print("Project: \(projectTimeStored), \(recoveredProjectTimeString) " )
         
         let projectIsStopStored = defaults.bool(forKey: projectIsKey)
         projectIsStop = projectIsStopStored
-        
-        
         print("ProjectIsStopped? : \(projectIsStopStored)")
         
         let breakTimerStored = defaults.integer(forKey: breakKey)
@@ -74,8 +80,28 @@ class ProjectViewController: UIViewController {
             continueProjectCounter()
         }
         
-
         store(.Project, projectIsStop)
+        
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        print("ViewWillDisappear")
+        
+        let zero: Int = 0
+        
+        defaults.set(zero, forKey: projectKey)
+        print(defaults.integer(forKey: projectKey))
+        
+        defaults.set(zero, forKey: breakKey)
+        print(defaults.integer(forKey: breakKey))
+        
+        defaults.set(false, forKey: projectIsKey)
+                      print(defaults.bool(forKey: projectIsKey))
+        
+        
     }
     
 //MARK: ButtonPressed
@@ -150,8 +176,8 @@ print(projectIsStop)
         
         ProjectLabel.alpha = 1
         let projectSumTime = projectCounter + elapsedMinCalculatorFrom(projectStartTime)
-        defaults.set(projectSumTime, forKey: projectKey)
         ProjectLabel.text = convertToTimeFrom(number: projectSumTime)
+        defaults.set(projectSumTime, forKey: projectKey)
         breakLabel.alpha = 0.5
     }
     
@@ -161,14 +187,11 @@ print(projectIsStop)
     }
     
     @objc func updateBreakTimer() {
+        
         breakLabel.alpha = 1
-        
         let breakSumTime = breakCounter + elapsedMinCalculatorFrom(breakStartTime)
-        
-        breakLabel.text = convertToTimeFrom(number: breakSumTime )
-        
+        breakLabel.text = convertToTimeFrom(number: breakSumTime)
         defaults.set(breakSumTime, forKey: breakKey)
-        
         ProjectLabel.alpha = 0.5
       
     }

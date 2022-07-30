@@ -13,14 +13,14 @@ class ViewController2: UIViewController {
     
     var secondNumber = 0
     
-    let firstKey = "firstKey"
+    let secondKey = "secondKey"
     
     var defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        defaults.integer(forKey: firstKey)
+        secondNumber = defaults.integer(forKey: secondKey)
         
         secondNumberLabel.text = String(secondNumber)
         
@@ -35,9 +35,13 @@ class ViewController2: UIViewController {
         secondNumber += 2
         secondNumberLabel.text = String(secondNumber)
         
-        defaults.set(secondNumber, forKey: firstKey)
+        defaults.set(secondNumber, forKey: secondKey)
     }
     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        defaults.set(0, forKey: secondKey)
+    }
 
     /*
     // MARK: - Navigation

@@ -100,7 +100,10 @@ class ProjectViewController: UIViewController {
         
         defaults.set(false, forKey: projectIsKey)
                       print(defaults.bool(forKey: projectIsKey))
+
         
+        projectTimer.invalidate()
+        breakTimer.invalidate()
         
     }
     

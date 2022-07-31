@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="im2-NU-etL">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,12 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lNJ-iT-odf">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" red="0.9983132482" green="0.98435932400000004" blue="0.32527393100000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="59" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-qC-AhE">
-                                <rect key="frame" x="39" y="296" width="336.5" height="304"/>
+                                <rect key="frame" x="39" y="356.5" width="336.5" height="183"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SecondNumber" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fm-ti-Olu">
                                         <rect key="frame" x="0.0" y="0.0" width="336.5" height="62"/>
@@ -46,22 +43,6 @@
                                             <action selector="increaseButtonPressed:" destination="8cE-Sh-CaO" eventType="touchUpInside" id="R1B-1k-yIb"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vK6-7W-qkD">
-                                        <rect key="frame" x="124" y="242" width="88.5" height="62"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Back" cornerStyle="capsule" titleAlignment="automatic">
-                                            <backgroundConfiguration key="background" strokeWidth="5" strokeOutset="10">
-                                                <color key="backgroundColor" systemColor="systemYellowColor"/>
-                                                <color key="strokeColor" red="0.9983132482" green="0.98435932400000004" blue="0.32527393100000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </backgroundConfiguration>
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
-                                            <attributedString key="attributedSubtitle"/>
-                                            <color key="baseForegroundColor" systemColor="systemPinkColor"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <segue destination="BYZ-38-t0r" kind="modal" modalPresentationStyle="fullScreen" id="P2X-xQ-uoi"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -69,11 +50,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="QDt-qC-AhE" firstAttribute="centerX" secondItem="xTK-tl-EjE" secondAttribute="centerX" id="HHj-hz-YGe"/>
-                            <constraint firstItem="lNJ-iT-odf" firstAttribute="leading" secondItem="XQI-8r-wNj" secondAttribute="leading" id="ImQ-bQ-JxH"/>
-                            <constraint firstItem="lNJ-iT-odf" firstAttribute="trailing" secondItem="XQI-8r-wNj" secondAttribute="trailing" id="PHg-Zu-LbV"/>
                             <constraint firstItem="QDt-qC-AhE" firstAttribute="centerY" secondItem="xTK-tl-EjE" secondAttribute="centerY" id="gwi-IK-JzW"/>
-                            <constraint firstItem="lNJ-iT-odf" firstAttribute="bottom" secondItem="XQI-8r-wNj" secondAttribute="bottom" id="hqN-k2-yI1"/>
-                            <constraint firstItem="lNJ-iT-odf" firstAttribute="top" secondItem="XQI-8r-wNj" secondAttribute="top" id="v6s-sr-0hZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xRs-Tk-Ac3"/>
@@ -83,7 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y2w-jl-YJD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1145" y="-258"/>
+            <point key="canvasLocation" x="2055.072463768116" y="-258.48214285714283"/>
         </scene>
         <!--View Controller1-->
         <scene sceneID="tne-QT-ifu">
@@ -93,10 +70,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5YL-Ic-Vif">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" red="0.24756732579999999" green="0.55611735579999999" blue="0.34114167090000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="42" translatesAutoresizingMaskIntoConstraints="NO" id="jrh-uW-D6z">
                                 <rect key="frame" x="74.5" y="319.5" width="265.5" height="257"/>
                                 <subviews>
@@ -136,7 +109,7 @@
                                             <color key="baseForegroundColor" systemColor="systemPinkColor"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="8cE-Sh-CaO" kind="modal" modalPresentationStyle="fullScreen" id="BXQ-r0-ir2"/>
+                                            <segue destination="8cE-Sh-CaO" kind="show" id="gVS-B6-StE"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -145,25 +118,43 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="5YL-Ic-Vif" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7Yr-wV-wKF"/>
-                            <constraint firstItem="5YL-Ic-Vif" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="DCz-tf-qwJ"/>
                             <constraint firstItem="jrh-uW-D6z" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="LIp-M8-Dju"/>
-                            <constraint firstItem="5YL-Ic-Vif" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ruz-dC-N7a"/>
-                            <constraint firstItem="5YL-Ic-Vif" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="mZM-dP-cZ5"/>
                             <constraint firstItem="jrh-uW-D6z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="q62-c2-typ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="sGL-He-Yor"/>
+                    <navigationItem key="navigationItem" title="title" prompt="prompt" largeTitleDisplayMode="always" id="sGL-He-Yor">
+                        <barButtonItem key="backBarButtonItem" title="backButton" id="a1u-7h-yeD"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="firstNumberLabel" destination="1Pi-rv-0FY" id="11e-hS-1DO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1202.8985507246377" y="-258.48214285714283"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WuE-ee-k6s">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="im2-NU-etL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tnl-8e-FrC">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageReference key="backIndicatorImage" image="arrowshape.turn.up.backward.circle.fill" catalog="system" symbolScale="medium"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="6hp-Bg-0Q3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H74-G4-nKy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="292.75362318840581" y="-258.48214285714283"/>
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.backward.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -43,35 +43,18 @@ class ProjectViewController: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ViewDidLoad")
-        
 
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print("viewWillAppear")
-        
-        let projectTimeStored = defaults.integer(forKey: projectKey)
-        
-        projectCounter = projectTimeStored
-        let recoveredProjectTimeString = convertToTimeFrom(number: projectTimeStored)
+        let projectCounterStored = defaults.integer(forKey: projectKey)
+        projectCounter = projectCounterStored
+        let recoveredProjectTimeString = convertToTimeFrom(number: projectCounterStored)
         ProjectLabel.text = recoveredProjectTimeString
-        print("Project: \(projectTimeStored), \(recoveredProjectTimeString) " )
-        
         let projectIsStopStored = defaults.bool(forKey: projectIsKey)
         projectIsStop = projectIsStopStored
-        print("ProjectIsStopped? : \(projectIsStopStored)")
-        
-        let breakTimerStored = defaults.integer(forKey: breakKey)
-        breakCounter = breakTimerStored
-        
-        let recoveredBreakTimerString = convertToTimeFrom(number: breakTimerStored)
+        let breakCounterStored = defaults.integer(forKey: breakKey)
+        breakCounter = breakCounterStored
+        let recoveredBreakTimerString = convertToTimeFrom(number: breakCounterStored)
         breakLabel.text = recoveredBreakTimerString
-        
-        print("Break: \(breakTimerStored), \(recoveredBreakTimerString)")
-        
+
         if projectIsStop {
             stopProjectCounter()
             continueBreakCounter()
@@ -79,54 +62,40 @@ class ProjectViewController: UIViewController {
             stopBreakCounter()
             continueProjectCounter()
         }
-        
         store(.Project, projectIsStop)
-        
     }
     
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
-        print("ViewWillDisappear")
+        print("viewDidDisappear")
         
-        let zero: Int = 0
-        
-        defaults.set(zero, forKey: projectKey)
-        print(defaults.integer(forKey: projectKey))
-        
-        defaults.set(zero, forKey: breakKey)
-        print(defaults.integer(forKey: breakKey))
-        
+        defaults.set(0, forKey: projectKey)
+        defaults.set(0, forKey: breakKey)
         defaults.set(false, forKey: projectIsKey)
-                      print(defaults.bool(forKey: projectIsKey))
-
-        
         projectTimer.invalidate()
         breakTimer.invalidate()
-        
     }
+  
+    
+    
+    
     
 //MARK: ButtonPressed
     @IBAction func buttonPressed(_ sender: UIButton) {
-      //  var stoppedActivity: Activity
         
         projectIsStop = !projectIsStop
         defaults.set(projectIsStop, forKey: projectIsKey)
-print(projectIsStop)
        
         if projectIsStop {
-         //   stoppedActivity = .Project
             stopProjectCounter()
             continueBreakCounter()
         }
         else {
-          //  stoppedActivity = .Break
             stopBreakCounter()
             continueProjectCounter()
         }
-   // store(stoppedActivity, projectIsStop)
-     
     }
  
 //MARK: Counters
@@ -141,14 +110,10 @@ print(projectIsStop)
     }
     
     func continueBreakCounter() {
-//        if breakStartTime == nil {
-//            breakStartTime = Date.now
-//        }
         runBreakTimer()
     }
     
     func stopProjectCounter() {
-        
         projectTimer.invalidate()
         projectCounter += elapsedMinCalculatorFrom(projectStartTime)
         breakStartTime = Date.now
@@ -176,7 +141,6 @@ print(projectIsStop)
     }
     
     @objc func updateProjectTimer() {
-        
         ProjectLabel.alpha = 1
         let projectSumTime = projectCounter + elapsedMinCalculatorFrom(projectStartTime)
         ProjectLabel.text = convertToTimeFrom(number: projectSumTime)
@@ -190,7 +154,6 @@ print(projectIsStop)
     }
     
     @objc func updateBreakTimer() {
-        
         breakLabel.alpha = 1
         let breakSumTime = breakCounter + elapsedMinCalculatorFrom(breakStartTime)
         breakLabel.text = convertToTimeFrom(number: breakSumTime)
@@ -225,9 +188,6 @@ print(projectIsStop)
         let date = Date()
         storeCounter += 1
         storeArray.append(Event(time: date, isStop: isStop, stoppedActivity: activity))
-        for event in storeArray {
-//print(event.time, event.stoppedActivity, event.isStop )
-        }
     }
     
 }

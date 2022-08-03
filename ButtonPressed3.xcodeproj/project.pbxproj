@@ -17,6 +17,7 @@
 		853C084C286C9B0100ED48D3 /* ButtonPressed3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C084B286C9B0100ED48D3 /* ButtonPressed3UITests.swift */; };
 		853C084E286C9B0100ED48D3 /* ButtonPressed3UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C084D286C9B0100ED48D3 /* ButtonPressed3UITestsLaunchTests.swift */; };
 		853C085B286C9B6000ED48D3 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C085A286C9B6000ED48D3 /* ProjectViewController.swift */; };
+		857B41B12898054400FE4EA9 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B41B02898054400FE4EA9 /* Counter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		853C084B286C9B0100ED48D3 /* ButtonPressed3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPressed3UITests.swift; sourceTree = "<group>"; };
 		853C084D286C9B0100ED48D3 /* ButtonPressed3UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPressed3UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		853C085A286C9B6000ED48D3 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
+		857B41B02898054400FE4EA9 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		853C0829286C9AFF00ED48D3 /* ButtonPressed3 */ = {
 			isa = PBXGroup;
 			children = (
+				857B41B02898054400FE4EA9 /* Counter.swift */,
 				853C082A286C9AFF00ED48D3 /* AppDelegate.swift */,
 				853C082C286C9AFF00ED48D3 /* SceneDelegate.swift */,
 				853C082E286C9AFF00ED48D3 /* ViewController.swift */,
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				857B41B12898054400FE4EA9 /* Counter.swift in Sources */,
 				853C085B286C9B6000ED48D3 /* ProjectViewController.swift in Sources */,
 				853C082F286C9AFF00ED48D3 /* ViewController.swift in Sources */,
 				853C082B286C9AFF00ED48D3 /* AppDelegate.swift in Sources */,

@@ -7,15 +7,7 @@
 
 import UIKit
 
-enum Activity {
-    case Project, Break
-}
 
-struct Event {
-    let time: Date
-    let isStop: Bool
-    let stoppedActivity: Activity
-}
 
 class ProjectViewController: UIViewController {
     
@@ -24,6 +16,8 @@ class ProjectViewController: UIViewController {
     @IBOutlet weak var ProjectLabel: UILabel!
     @IBOutlet weak var breakLabel: UILabel!
  
+    var counter = Counter(breakValue: 0, projectValue: 0, projectIsStop: false)
+    
     var breakCounter = 0
     var breakTimer = Timer()
     var breakStartTime = Date.now
@@ -40,55 +34,80 @@ class ProjectViewController: UIViewController {
     let projectKey = "projectKey"
     let breakKey = "breakKey"
     let projectIsKey = "projectIsKey"
- 
+    
+    let key = "CounterData"
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    
+    func loadCounter() -> Counter {
+        
+        var tempCounter: Counter = Counter(breakValue: 0, projectValue: 0, projectIsStop: false)
+        
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                tempCounter = try decoder.decode(Counter.self, from: data)
+            } catch {
+                print("error decoding counter:\(error) ")
+            }
+        }
+        
+        return tempCounter
+    }
+    
+    func saveCounter( counterToBeStored count: Counter) {
+        
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(count)
+            try data.write(to: dataFilePath!)
+            
+        } catch {
+            print("error encoding counter: \(error)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let loadedCounter = loadCounter()
+        print("loadedCounter: \(loadedCounter)")
 
-        let projectCounterStored = defaults.integer(forKey: projectKey)
-        projectCounter = projectCounterStored
-        let recoveredProjectTimeString = convertToTimeFrom(number: projectCounterStored)
+        counter = loadedCounter
+
+        let recoveredProjectTimeString = convertToTimeFrom(number: counter.projectValue)
         ProjectLabel.text = recoveredProjectTimeString
-        let projectIsStopStored = defaults.bool(forKey: projectIsKey)
-        projectIsStop = projectIsStopStored
-        let breakCounterStored = defaults.integer(forKey: breakKey)
-        breakCounter = breakCounterStored
-        let recoveredBreakTimerString = convertToTimeFrom(number: breakCounterStored)
+        
+        let recoveredBreakTimerString = convertToTimeFrom(number: counter.breakValue)
         breakLabel.text = recoveredBreakTimerString
 
-        if projectIsStop {
+        if counter.projectIsStop {
             stopProjectCounter()
             continueBreakCounter()
         } else {
             stopBreakCounter()
             continueProjectCounter()
         }
-        store(.Project, projectIsStop)
+      //  store(.Project, projectIsStop)
     }
-    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         print("viewDidDisappear")
         
-        defaults.set(0, forKey: projectKey)
-        defaults.set(0, forKey: breakKey)
-        defaults.set(false, forKey: projectIsKey)
         projectTimer.invalidate()
         breakTimer.invalidate()
+        
+        saveCounter(counterToBeStored: Counter(breakValue: 0, projectValue: 0, projectIsStop: false))
     }
-  
-    
-    
-    
     
 //MARK: ButtonPressed
     @IBAction func buttonPressed(_ sender: UIButton) {
         
-        projectIsStop = !projectIsStop
-        defaults.set(projectIsStop, forKey: projectIsKey)
+        counter.projectIsStop = !counter.projectIsStop
+        defaults.set(counter.projectIsStop, forKey: projectIsKey)
        
-        if projectIsStop {
+        if counter.projectIsStop {
             stopProjectCounter()
             continueBreakCounter()
         }
@@ -115,13 +134,13 @@ class ProjectViewController: UIViewController {
     
     func stopProjectCounter() {
         projectTimer.invalidate()
-        projectCounter += elapsedMinCalculatorFrom(projectStartTime)
+        counter.projectValue += elapsedMinCalculatorFrom(projectStartTime)
         breakStartTime = Date.now
     }
     
     func stopBreakCounter() {
         breakTimer.invalidate()
-        breakCounter += elapsedMinCalculatorFrom(breakStartTime)
+        counter.breakValue += elapsedMinCalculatorFrom(breakStartTime)
         projectStartTime = Date.now
     }
     
@@ -142,9 +161,13 @@ class ProjectViewController: UIViewController {
     
     @objc func updateProjectTimer() {
         ProjectLabel.alpha = 1
-        let projectSumTime = projectCounter + elapsedMinCalculatorFrom(projectStartTime)
+        let projectSumTime = counter.projectValue + elapsedMinCalculatorFrom(projectStartTime)
         ProjectLabel.text = convertToTimeFrom(number: projectSumTime)
-        defaults.set(projectSumTime, forKey: projectKey)
+        
+        counter.projectValue = projectSumTime
+        saveCounter(counterToBeStored: counter)
+        
+       // defaults.set(projectSumTime, forKey: projectKey)
         breakLabel.alpha = 0.5
     }
     
@@ -155,9 +178,14 @@ class ProjectViewController: UIViewController {
     
     @objc func updateBreakTimer() {
         breakLabel.alpha = 1
-        let breakSumTime = breakCounter + elapsedMinCalculatorFrom(breakStartTime)
+        let breakSumTime = counter.breakValue + elapsedMinCalculatorFrom(breakStartTime)
         breakLabel.text = convertToTimeFrom(number: breakSumTime)
-        defaults.set(breakSumTime, forKey: breakKey)
+       
+        counter.breakValue = breakSumTime
+        saveCounter(counterToBeStored: counter)
+        
+       // defaults.set(breakSumTime, forKey: breakKey)
+        
         ProjectLabel.alpha = 0.5
       
     }
